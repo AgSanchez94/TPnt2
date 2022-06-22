@@ -11,5 +11,8 @@ const apiTurnos = axios.create({
 export default{
     getTurnos(){
         return apiTurnos.get('/api/getlistaTurnos')
+    },
+    setTurno(obj){
+        return apiTurnos.post('/api/addTurnos', obj)
     }
 }

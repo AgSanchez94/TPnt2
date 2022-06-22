@@ -14,25 +14,26 @@
 
       <fieldset>
         <div class="form-group">
-          <label for="Afiliado">Afiliado nº:</label>
+          <label >Afiliado nº:</label>
           <input
             type="text"
             class="form-control"
             name="Afiliado"
             style="font-size: 30px"
+            v-model="miTurno.id_afiliado"
           />
         </div>
 
         <div class="form-group">
-          <label for="mail">Médico Matricula:</label>
-          <input type="text" class="form-control" name="matricula" required />
+          <label >Médico Matricula:</label>
+          <input type="text" class="form-control" name="matricula" v-model="matriculaMed.matri" required />
         </div>
         <div class="form-group">
-          <label for="fecha">Fecha del turno:</label>
+          <label >Fecha del turno:</label>
           <div class="row">
             <div class="col">
-              <label for="dia">Día:</label>
-              <select type="text" class="form-control" name="dia">
+              <label >Día:</label>
+              <select type="text" class="form-control" name="dia" v-model="miFecha.dia">
                 <option value="01">01</option>
                 <option value="02">02</option>
                 <option value="03">03</option>
@@ -68,8 +69,8 @@
             </div>
 
             <div class="col">
-              <label for="mes">Mes:</label>
-              <select type="text" class="form-control" name="mes">
+              <label >Mes:</label>
+              <select type="text" class="form-control" name="mes" v-model="miFecha.mes">
                 <option value="01">01</option>
                 <option value="02">02</option>
                 <option value="03">03</option>
@@ -85,8 +86,8 @@
               </select>
             </div>
             <div class="col">
-              <label for="mes">Año:</label>
-              <select type="text" class="form-control" name="anio">
+              <label >Año:</label>
+              <select type="text" class="form-control" name="anio" v-model="miFecha.anio">
                 <option value="2022">2022</option>
                 <option value="2023">2023</option>
                 <option value="2024">2024</option>
@@ -96,8 +97,8 @@
         </div>
 
         <div>
-          <label for="desde">Hora turno:</label>
-          <select type="text" class="form-control" name="desde">
+          <label >Hora turno:</label>
+          <select type="text" class="form-control" name="desde" v-model="miTurno.hora">
             <option value="0800">08:00</option>
             <option value="0815">08:15</option>
             <option value="0830">08:30</option>
@@ -146,12 +147,7 @@
           </select>
         </div>
         <div class="form-group">
-          <input
-            type="submit"
-            class="btn btn-primary form-control"
-            name="registrar"
-            value="Registrar TURNO"
-          />
+          <button class="btn btn-primary form-control" @click="prueba"> Registrar El Gran Turno </button>
         </div>
       </fieldset>
       <div>
@@ -169,4 +165,36 @@
     </form>
   </div>
 </template>
+
+<script>
+import conectarTurnos from '../services/conectarTurnos'
+import conectarMedicos from '../services/conectarMedicos'
+
+export default{
+  setup(){
+
+  },
+  data(){
+
+    return{
+          miTurno: { id_afiliado: 0, nombreA: '', apellidoA: '', dniA: 0, nombreM: '', apellidoM: '', especialidadM: '', fecha: '', hora: ''},
+          miFecha: { dia: '', mes: '', anio:''},
+          matriculaMed: {matri: ''},
+    }
+  },
+  methods: {
+      async encontrarMedico(matricula){
+        debugger
+        const misMeds = await conectarMedicos.getMedicos();
+        debugger
+        console.log(misMeds);
+        debugger
+      },
+      prueba(){
+        debugger
+        this.encontrarMedico(this.matriculaMed.matri)
+      }
+  }
+}
+</script>
 
